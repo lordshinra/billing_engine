@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package billing_engine;
+
+option go_package = "./pb";
+
+service BillingService {
+
+  rpc CreateLoan(CreateLoanRequest) returns (CreateLoanResponse);
+  rpc GetOutstanding(GetOutstandingRequest) returns (GetOutstandingResponse);
+  rpc IsDelinquent(IsDelinquentRequest) returns (IsDelinquentResponse);
+  rpc MakePayment(MakePaymentRequest) returns (MakePaymentResponse);
+}
+
+message CreateLoanRequest {
+  string loan_id = 1;
+  string customer_id = 2;
+  int64 principal_amount = 3;
+  int32 tenure_weeks = 4;
+  double interest_rate = 5;
+}
+
+message CreateLoanResponse {
+  bool success = 1;
+}
+
+message GetOutstandingRequest {
+  string loan_id = 1;
+}
+
+message GetOutstandingResponse {
+  int64 outstanding_amount = 1;
+}
+
+message IsDelinquentRequest {
+  string loan_id = 1;
+}
+
+message IsDelinquentResponse {
+  bool delinquent = 1;
+}
+
+message MakePaymentRequest {
+  string loan_id = 1;
+  int64 amount = 2;
+}
+
+message MakePaymentResponse {
+  bool success = 1;
+}
