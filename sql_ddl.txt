@@ -1,0 +1,46 @@
+-- `default`.loan_schedules definition
+
+CREATE TABLE `loan_schedules` (
+  `id` bigint unsigned NOT NULL,
+  `loan_id` varchar(100) NOT NULL,
+  `week_number` bigint NOT NULL,
+  `due_amount` bigint NOT NULL,
+  `paid` tinyint(1) DEFAULT '0',
+  `paid_at` datetime(3) DEFAULT NULL,
+  `created_at` datetime(3) NOT NULL,
+  `due_date` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `loan_id` (`loan_id`,`week_number`),
+  UNIQUE KEY `idx_loan_week` (`loan_id`,`week_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- `default`.loans definition
+
+CREATE TABLE `loans` (
+  `id` bigint unsigned NOT NULL,
+  `loan_id` varchar(100) NOT NULL,
+  `customer_id` varchar(100) NOT NULL,
+  `principal_amount` bigint NOT NULL,
+  `interest_rate` decimal(5,2) NOT NULL,
+  `total_amount` bigint NOT NULL,
+  `outstanding_amount` bigint NOT NULL,
+  `weekly_installment` bigint NOT NULL,
+  `tenure_weeks` bigint NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `created_at` datetime(3) NOT NULL,
+  `updated_at` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uni_loans_loan_id` (`loan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- `default`.payments definition
+
+CREATE TABLE `payments` (
+  `id` bigint unsigned NOT NULL,
+  `loan_id` varchar(100) NOT NULL,
+  `amount` bigint NOT NULL,
+  `created_at` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

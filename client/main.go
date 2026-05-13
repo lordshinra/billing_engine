@@ -73,7 +73,6 @@ func main() {
 	amount := flag.Int64("amount", 5000000, "Amount (Principal or Payment)")
 	tenureWeeks := flag.Int("tenure_weeks", 50, "Tenure in weeks")
 	interestRate := flag.Float64("interest_rate", 10.0, "Interest rate in percentage")
-	serverAddr := flag.String("server", "localhost:50051", "The server address in the format of host:port")
 
 	flag.Parse()
 
@@ -81,7 +80,7 @@ func main() {
 		log.Fatal("Please specify a method using -method flag (create, outstanding, payment, delinquent)")
 	}
 
-	conn, err := grpc.NewClient(*serverAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
